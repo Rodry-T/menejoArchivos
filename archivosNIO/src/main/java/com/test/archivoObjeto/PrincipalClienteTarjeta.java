@@ -26,20 +26,24 @@ public class PrincipalClienteTarjeta {
             System.out.println("4. Mostrar Datos"); 
             System.out.println("5. Bloquear Tarjeta");
             System.out.println("6. Depositar Dinero");
-            System.out.println("7. salir");
+            System.out.println("7. Retiro de Dinero");
+            System.out.println("8. salir");
             System.out.println("Digite una opcion");
             opc = leer.nextInt();
             switch (opc) {
                 case 1:
+                    obj.crearDirectorio();
                     obj.crearArchivo();
                     break;
                 case 2:
                     String res="S";
+                    leer.nextLine();
                     while(res.equalsIgnoreCase("S")){
                       obj.crearClienteTarjeta();
                         System.out.println("Desea seguir registrando clientes S/N");
                         res=leer.nextLine();
-                    }                    
+                    }
+                                     
                     break;
                 case 3:
                     obj.guardarObjetos();
@@ -63,6 +67,15 @@ public class PrincipalClienteTarjeta {
                     System.out.println("Digite el monto que desea depositar");
                     double m=leer.nextDouble();
                     obj.depositar(ced, m);
+                    obj.guardarObjetos();
+                    break;
+                case 7:
+                    obj.leerClientes();
+                    System.out.println("Digite el numero de cedula");
+                    int ce=leer.nextInt();
+                    System.out.println("Digite el monto que desea retirar");
+                    double mO=leer.nextDouble();
+                    obj.Retiro(ce, mO);
                     obj.guardarObjetos();
                     break;
                 default:

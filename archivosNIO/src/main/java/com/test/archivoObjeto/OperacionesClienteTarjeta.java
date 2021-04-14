@@ -84,33 +84,23 @@ public class OperacionesClienteTarjeta {
             }
         }
     }
-    //realizando el deposito de un monto de dinero a la cuenta
-    public void depositar(int cedula,double monto){
-        int sw=0;
-        if(listaCliente!=null){
-            for(Cliente cliente:listaCliente){
-                if(cliente.getCedula()==cedula){
-                    sw=1;
-                    if(cliente.getTarjeta().getEstado().equals("ACTIVO")){
-                        double saldo=cliente.getTarjeta().getSaldo();
-                        saldo=saldo+monto;
-                        cliente.getTarjeta().setSaldo(saldo);
-                        System.out.println("Se realizo el deposito");
-                    }else{
-                        System.out.println("La tarjeta esta bloquedo");
-                        System.out.println("Comuniquese con el Banco!");
-                    }
-                }
-            }
-            if(sw==0){
-                System.out.println("El cliente no esta registrado");
-            }
-        }
-    }
-    
     //CREANDO UN ARCHIVO
+    public void crearDirectorio() {
+        Path path = Paths.get("E:\\PROGRAIII");
+        try {
+            if (!Files.exists(path)) {
+                Files.createDirectory(path);
+                System.out.println("directorio creado");
+            } else {
+                System.out.println("Ya existe el directorio");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     public void crearArchivo(){
-        Path path=Paths.get("E:\\programacionIII\\archivoCliente.txt");
+        Path path=Paths.get("E:\\PROGRAIII\\archivoCliente.txt");
         try {
             if(!Files.exists(path)){
                 Files.createFile(path);
@@ -123,7 +113,7 @@ public class OperacionesClienteTarjeta {
     }
     //guardando la listacliente dentro del archivo creado con anterioridad
     public void guardarObjetos(){
-        String ruta="E:\\programacionIII\\archivoCliente.txt";
+        String ruta="E:\\PROGRAIII\\archivoCliente.txt";
         try {
             FileOutputStream archivo=new FileOutputStream(ruta);
             ObjectOutputStream oos=new ObjectOutputStream(archivo);
@@ -139,7 +129,7 @@ public class OperacionesClienteTarjeta {
     }
     //cargamos los datos del archivo a un list<Cliente>
     public void leerClientes(){
-        String ruta="E:\\programacionIII\\archivoCliente.txt";
+        String ruta="E:\\PROGRAIII\\archivoCliente.txt";
         try {
             FileInputStream archivo=new FileInputStream(ruta);
             ObjectInputStream ois=new ObjectInputStream(archivo);
@@ -154,6 +144,58 @@ public class OperacionesClienteTarjeta {
              Logger.getLogger(OperacionesClienteTarjeta.class.getName()).log(Level.SEVERE, null, ex);
         }catch(ClassNotFoundException ex){
              Logger.getLogger(OperacionesClienteTarjeta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    //realizando el deposito de un monto de dinero a la cuenta
+    public void depositar(int cedula, double monto) {
+        int sw = 0;
+        if (listaCliente != null) {
+            for (Cliente cliente : listaCliente) {
+                if (cliente.getCedula() == cedula) {
+                    sw = 1;
+                    if (cliente.getTarjeta().getEstado().equals("ACTIVO")) {
+                        double saldo = cliente.getTarjeta().getSaldo();
+                        saldo = saldo + monto;
+                        cliente.getTarjeta().setSaldo(saldo);
+                        System.out.println("Se realizo el deposito");
+                    } else {
+                        System.out.println("La tarjeta esta bloquedo");
+                        System.out.println("Comuniquese con el Banco!");
+                    }
+                }
+            }
+            if (sw == 0) {
+                System.out.println("El cliente no esta registrado");
+            }
+        }
+    }
+
+    //realizando el deposito de un monto de dinero a la cuenta
+    public void Retiro(int cedula, double monto) {
+        int sw = 0;
+        if (listaCliente != null) {
+            for (Cliente cliente : listaCliente) {
+                if (cliente.getCedula() == cedula) {
+                    sw = 1;
+                    if (cliente.getTarjeta().getEstado().equals("ACTIVO")) {
+                        if (monto <= cliente.getTarjeta().getSaldo()) {
+                            double saldo = cliente.getTarjeta().getSaldo();
+                            saldo = saldo - monto;
+                            cliente.getTarjeta().setSaldo(saldo);
+                            System.out.println("Se realizo el retiro");
+                        } else {
+                            System.out.println("FONDOS INSUFICIENTES");
+                        }
+
+                    } else {
+                        System.out.println("La tarjeta esta bloquedo");
+                        System.out.println("Comuniquese con el Banco!");
+                    }
+                }
+            }
+            if (sw == 0) {
+                System.out.println("El cliente no esta registrado");
+            }
         }
     }
  
